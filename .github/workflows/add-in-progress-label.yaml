@@ -1,0 +1,21 @@
+name: Add In-Progress Label
+
+on:
+  issues:
+    types:
+      - assigned
+
+jobs:
+  add-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add in-progress label
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              labels: ['status: in progress']
+            })
